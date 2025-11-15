@@ -1,85 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Search } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
-const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+interface HeaderProps {
+  isDark: boolean;
+  setIsDark: (isDark: boolean) => void;
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const menuItems = ['Home', 'About Us', 'Services', 'Contact'];
+const Header: React.FC<HeaderProps> = ({ isDark, setIsDark }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-    }`}>
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-teal-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">V</span>
+    <header className={`fixed top-0 w-full z-50 ${isDark ? 'bg-[#000000]' : 'bg-white/95'} backdrop-blur-sm`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
+          <div className="flex items-center">
+            <div className="w-16 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+              <img src="/assets/Logo.png" alt="Logo" className="w-10 h-7 object-fit-cover" />
             </div>
-            <span className={`text-2xl font-bold transition-colors ${
-              isScrolled ? 'text-gray-900' : 'text-white'
-            }`}>
-              VIJUIT
-            </span>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-8">
-            {menuItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(' ', '-')}`}
-                className={`transition-colors hover:text-blue-600 ${
-                  isScrolled ? 'text-gray-900' : 'text-white'
-                }`}
-              >
-                {item}
-              </a>
-            ))}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div>
+          {/* Center Navigation */}
+          <nav className="hidden md:flex items-center gap-1 bg-white border-1 rounded-full px-2 py-2">
+             <a href="#" className="px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-medium transition-all">
+              About Us
+            </a>
+            <a href="#" className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${isDark ? 'text-black' : 'text-black'}`}>
+              Our Process
+            </a>
+            <a href="#" className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${isDark ? 'text-black' : 'text-black'}`}>
+              Why Us
+            </a>
+            <a href="#" className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${isDark ? 'text-black' : 'text-black'}`}>
+              Portfolio
+            </a>
+            <a href="#" className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${isDark ? 'text-black' : 'text-black'}`}>
+              Blogs
+            </a>
           </nav>
 
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`md:hidden transition-colors ${
-              isScrolled ? 'text-gray-900' : 'text-white'
-            }`}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
+          {/* Right Side - Theme Toggle & Contact Button */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsDark(!isDark)}
+              className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} transition-all`}
+              aria-label="Toggle theme"
+            >
+              {isDark ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
 
-        {isMenuOpen && (
-          <div className="md:hidden bg-white shadow-lg rounded-lg mt-2 p-4">
-            {menuItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(' ', '-')}`}
-                className="block py-3 text-gray-900 hover:text-blue-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item}
-              </a>
-            ))}
+            <button className="hidden md:block bg-blue-500 text-white px-6 py-2.5 rounded-full hover:bg-blue-600 transition-all text-sm font-medium shadow-lg shadow-blue-500/30">
+              Contact Us
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
-        )}
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className={`md:hidden ${isDark ? 'bg-gray-800' : 'bg-gray-50'} border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+          <nav className="px-4 py-4 flex flex-col gap-3">
+            <a href="#" className="py-2 px-4 bg-blue-500 text-white rounded-lg">Our Process</a>
+            <a href="#" className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">What's</a>
+            <a href="#" className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">Portfolio</a>
+            <a href="#" className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">Blog</a>
+            <button className="mt-2 bg-blue-500 text-white px-6 py-2.5 rounded-full hover:bg-blue-600 transition-all">
+              Contact Us
+            </button>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

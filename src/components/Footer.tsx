@@ -1,97 +1,124 @@
 import React from 'react';
-import { Linkedin, Twitter, Facebook, Instagram, Github, Phone, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, ArrowUp, Mail, Facebook, Instagram, Linkedin, X } from 'lucide-react';
 
-const Footer: React.FC = () => {
-  const socialLinks = [
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Github, href: '#', label: 'GitHub' }
-  ];
+interface FooterProps {
+  isDark: boolean;
+}
 
-  const menuItems = ['Home', 'About Us', 'Contact', 'Privacy Policy'];
+const Footer: React.FC<FooterProps> = ({ isDark }) => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-teal-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">V</span>
-              </div>
-              <span className="text-2xl font-bold">VIJUIT</span>
+    <footer className={`py-16 px-4 md:px-8 font-sans ${isDark ? 'bg-black text-white' : 'bg-gray-50 text-gray-900'}`}>
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Top Section: Newsletter & Heading */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="w-full md:w-1/3 relative">
+          
+            <div className="relative">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className={`w-full bg-transparent border-b py-3 pr-12 pl-8 focus:outline-none transition-colors ${isDark ? 'border-gray-300 focus:border-white' : 'border-gray-300 focus:border-black'}`}
+              />
+              <Mail size={20} className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400" />
+              <button className="absolute right-0 top-1/2 -translate-y-1/2 bg-black text-white rounded-full p-2 hover:bg-gray-800 transition-colors">
+                <ArrowRight size={16} />
+              </button>
             </div>
-            <p className="text-gray-300 leading-relaxed">
-              Bringing digital dreams to life through innovative software solutions and cutting-edge technology.
+          </div>
+          
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight">Let's talk</h2>
+        </div>
+
+        <hr className="border-gray-200 mb-16" />
+
+        {/* Middle Section: Logo, Description, Addresses */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+          
+          {/* Logo & Description Column */}
+          <div className="lg:col-span-5">
+            <div className="bg-blue-500 text-white rounded-xl p-6 w-48 mb-6 flex flex-col items-center justify-center">
+               {/* Custom Logo Representation */}
+               <div className="text-4xl font-serif italic mb-1">V</div>
+               <div className="text-sm font-bold tracking-widest uppercase">VIJUIT</div>
+               <div className="text-[0.5rem] opacity-75">BRINGING DIGITAL DREAMS TO LIFE</div>
+            </div>
+            <p className="text-gray-500 max-w-xs leading-relaxed">
+              Loreem sips jmlore mad pas emlore oal okmeft olre mnmad loer.
             </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  className="bg-gray-800 p-2 rounded-lg hover:bg-blue-600 transition-colors transform hover:scale-110"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
+          </div>
+
+          {/* Address Column */}
+          <div className="lg:col-span-3 lg:col-start-7">
+            <div className="mb-8">
+              <h4 className={`font-bold text-xl mb-2 ${isDark ? 'text-white' : 'text-black'}`}>Address</h4>
+              <p className={`text-gray-500 ${isDark ? 'text-white' : 'text-black'}`}>loremispum</p>
+            </div>
+            <div>
+              <h4 className={`font-bold text-xl mb-2 ${isDark ? 'text-white' : 'text-black'}`}>Address</h4>
+              <p className={`text-gray-500 ${isDark ? 'text-white' : 'text-black'}`}>Loreispum lore sipm</p>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {menuItems.map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase().replace(' ', '-')}`}
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Services</h3>
-            <ul className="space-y-2 text-gray-300">
-              <li>Custom Software Development</li>
-              <li>Cloud & DevOps</li>
-              <li>AI & Machine Learning</li>
-              <li>Mobile App Development</li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
-            <div className="space-y-3 text-gray-300">
-              <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-blue-400" />
-                <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-blue-400" />
-                <span>info@vijuit.com</span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-blue-400 mt-1" />
-                <span>123 Tech Street<br />Silicon Valley, CA 94000</span>
-              </div>
+          {/* Contact Column */}
+          <div className="lg:col-span-3">
+            <div className="mb-8">
+              <h4 className={`font-bold text-xl mb-2 ${isDark ? 'text-white' : 'text-black'}`}>Phone</h4>
+              <p className={`text-gray-500 ${isDark ? 'text-white' : 'text-black'}`}>+91 000-000-000</p>
+            </div>
+            <div>
+              <h4 className={`font-bold text-xl mb-2 ${isDark ? 'text-white' : 'text-black'}`}>Email</h4>
+              <p className={`text-gray-500 ${isDark ? 'text-white' : 'text-black'}`}>xyz@gmail.com</p>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 VIJUIT – Bringing digital dreams to life. All rights reserved.</p>
+        {/* Bottom Section: Navigation & Socials */}
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-8 pt-8">
+          
+          {/* Back to Top */}
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-3 group cursor-pointer"
+          >
+            <div className={`w-10 h-10 border rounded flex items-center justify-center transition-colors ${isDark ? 'border-gray-700 group-hover:border-gray-500' : 'border-gray-300 group-hover:border-gray-500'}`}>
+              <ArrowUp size={18} className={`${isDark ? 'text-white group-hover:text-white' : 'text-gray-600 group-hover:text-black'}`} />
+            </div>
+            <span className={`${isDark ? 'text-white group-hover:text-white' : 'text-gray-600 group-hover:text-black'}`}>Back to top</span>
+          </button>
+
+          {/* Navigation Links */}
+          <nav className={`flex flex-wrap justify-center gap-8 ${isDark ? 'text-white' : 'text-gray-600'}`}>
+            <a href="#" className={`hover:text-black transition-colors ${isDark ? 'hover:text-white' : ''}`}>Home</a>
+            <a href="#" className={`hover:text-black transition-colors ${isDark ? 'hover:text-white' : ''}`}>About us</a>
+            <a href="#" className={`hover:text-black transition-colors ${isDark ? 'hover:text-white' : ''}`}>Pricing</a>
+            <a href="#" className={`hover:text-black transition-colors ${isDark ? 'hover:text-white' : ''}`}>Blogs</a>
+            <a href="#" className={`hover:text-black transition-colors ${isDark ? 'hover:text-white' : ''}`}>Contact Us</a>
+          </nav>
+
+          {/* Social Icons */}
+          <div className="flex gap-4">
+            {[
+              { Icon: X, href: '#' },
+              { Icon: Facebook, href: '#' },
+              { Icon: Instagram, href: '#' },
+              { Icon: Linkedin, href: '#' },
+            ].map((social, index) => (
+              <a
+                key={index}
+                href={social.href}
+                className={`w-10 h-10 border rounded-full flex items-center justify-center transition-colors ${isDark ? 'border-gray-700 text-white hover:bg-gray-800' : 'border-gray-200 text-black hover:bg-gray-100'}`}
+              >
+                <social.Icon size={18} strokeWidth={2.5} />
+              </a>
+            ))}
+          </div>
         </div>
+
       </div>
     </footer>
   );
