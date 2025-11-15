@@ -81,9 +81,10 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({ isDark }) => {
                         <button className="w-10 h-10 rounded-full border-2 border-blue-500 text-blue-500 flex items-center justify-center hover:bg-blue-50 transition">
                             <ChevronLeft className="w-6 h-6" />
                         </button>
-                        <button className="w-10 h-10 rounded-full border-2 border-blue-500 text-blue-500 flex items-center justify-center hover:bg-blue-50 transition">
-                            <ChevronRight className="w-6 h-6" 0
-                        </button>
+                       <button className="w-10 h-10 rounded-full border-2 border-blue-500 text-blue-500 flex items-center justify-center hover:bg-blue-50 transition">
+    <ChevronRight className="w-6 h-6" />
+</button>
+
                     </div>
                 </header>
 
